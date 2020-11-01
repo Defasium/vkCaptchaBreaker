@@ -7,7 +7,7 @@ VKontakte captcha bypass with pseudoCRNN model running as chrome extension, Pyth
 
 HTML Live Demo: [🔥](https://csb-inxnl.netlify.app/)
 
-Codesandbox link for html with onnx js: [__vk-captcha-breaker__](https://codesandbox.io/s/vk-captcha-breaker-inxnl?file=/index.html)
+Code Sandbox for HTML with ONNX.js: [__vk-captcha-breaker__](https://codesandbox.io/s/vk-captcha-breaker-inxnl?file=/index.html)
 
 Chrome extension can be downloaded here: [__VKCaptchaBreaker.crx__](https://github.com/Defasium/VKCaptchaBreaker/raw/main/VKcaptcha_breaker.crx)
 
