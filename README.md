@@ -19,8 +19,7 @@ ____
 ## Description
 
 Keras implementation of Convolutional Recurrent Neural Network with ONNX.js support.
-In this module the CRNN architecture was implemented.
-To achieve better accuracy, CRNN utilizes CTC loss and Knowledge distillation with Label smoothing.
+To achieve better accuracy, [`CRNN`](python/crnn.py) utilizes CTC loss and Knowledge distillation with Label smoothing.
 CRNN comes in two versions: the one BIG with recurrent layers (RNNs)
 and the other small one without them.
 
@@ -47,6 +46,21 @@ After [`training`](python/FilthyCaptchaLearning.ipynb) on 1.5 Million filthy lab
 <p align="center">
   <img src="assets/smallKD30_280k.png" alt="training on filthy data"/>
 </p>
+
+Comparision:
+
+|Model|Dataset Size|Steps|Knowledge Distillation, %|Accuracy, %|Size, MB|Images/sec|
+|:--------------|:--:|:--:|:--:|---:|---:|---:|
+|BIG CRNN|5k|70k|-|80|66|~284|
+|BIG CRNN|16k|70k|-|93|66|~284|
+|BIG CRNN|40k|70k|-|__98.9__|66|~284|
+|small pseudoCRNN|40k|70k|-|64|4|~2155|
+|small pseudoCRNN|850k*|70k|70|82|4|~2155|
+|small pseudoCRNN|850k*|70k|50|83|4|~2155|
+|small pseudoCRNN|1.5M*|140k|50|86.7|4|~2155|
+|small pseudoCRNN|1.5M*|280k|30|91.2|__4__|__~2155__|
+
+\* - means that dataset was made with filthy labels from teacher
 
 Optimised pseudoCRNN student architecture after [`convertion to ONNX format`](python/onnx_crnn_conversion.py):
 
