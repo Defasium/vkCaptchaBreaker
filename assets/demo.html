@@ -1,0 +1,115 @@
+<html>
+
+<head>
+<style>
+#progBar {
+  width: 10%;
+  height: 30px;
+  background-color: #4CAF50;
+  text-align: center; /* To center it horizontally (if you want) */
+  line-height: 30px; /* To center it vertically */
+  color: white;
+  visibility: hidden;
+}
+#recognition_result {
+  border: none;
+  border-bottom: 2px solid gray;
+  text-align: center;
+  font-size: 35px;
+  width: 25%;
+}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+	<div  id="myProgress">
+		<div id="progBar">0%</div>
+	</div>
+    <div  align='center' id='recognition_button'>
+        <h2>To start recognition click on the captcha</h2>
+    </div>
+	<div align='center'>
+		<img width='40%' onclick="runOD()" src="https://cors-anywhere.herokuapp.com/https://vk.com/captcha.php?sid=625944628258&s=1" id="image" crossorigin="anonymous">
+		<i onclick="updateCaptcha()" style="font-size:24px" class="fa">&#xf021;</i>
+	</div>
+	<div align='center'><h2>Result:</h2></div>
+	<div align='center' ><input id='recognition_result' value=""></div>
+    
+
+
+    <!-- Load ONNX.js -->
+    <script src="https://cdn.jsdelivr.net/npm/onnxjs/dist/onnx.min.js"></script>
+	<!-- Code that consume ONNX.js -->
+    <script>
+		const codemap = ' 24578acdehkmnpqsuvxyz';
+		// Creat the session and load the pre-trained model
+		const session = new onnx.InferenceSession({backendHint:'cpu'});
+		const session2 = new onnx.InferenceSession({backendHint:'cpu'});
+		session.loadModel("https://cors-anywhere.herokuapp.com/https://github.com/Defasium/models/blob/main/captcha_model.onnx?raw=true");
+		session2.loadModel("https://cors-anywhere.herokuapp.com/https://github.com/Defasium/models/blob/main/ctc_model_.onnx?raw=true");
+		
+		async function update_width(elem, width) {
+			elem.style.width = width + "%";
+			elem.innerHTML = width + "%";
+			await new Promise(r => setTimeout(r, 25));
+		}
+		
+		async function updateCaptcha() {
+			var img = document.getElementById("image");
+			img.src = img.src;
+			document.querySelector("#recognition_result").value = "";
+		}
+		
+        async function runOD() {
+			var elem = document.getElementById("progBar");
+			elem.style.visibility = 'visible';
+			await update_width(elem, 1);
+
+            // Load image.
+			var img = document.getElementById("image");
+
+			var oc = document.createElement('canvas'),
+			octx = oc.getContext('2d');
+			const width = 128;
+            const height = 64;
+			await update_width(elem, 10);
+			oc.width = width;
+			oc.height = height;
+			//octx.rotate(-5*3.1415/180);
+			octx.drawImage(img, 0, 0, oc.width, oc.height);
+			await update_width(elem, 20);
+			// step 2
+			var imgData = octx.getImageData(10, 10, 50, 50);
+			input = Float32Array.from(octx.getImageData(0, 0, width, height).data);
+
+			await update_width(elem, 30);
+
+
+			// Run model with Tensor inputs and get the result.
+			const inputTensor = new onnx.Tensor(input, 'float32', [1, 4*width*height]);
+			//console.log(inputTensor);
+			const outputMap = await session.run([inputTensor]);
+			const outputData = outputMap.values().next().value.data;
+			await update_width(elem, 60);
+
+			input2 = Float32Array.from(outputData)
+			const inputTensor2 = new onnx.Tensor(input2, 'float32', [1, 30]);
+			await update_width(elem, 70);
+
+			const outputMap2 = await session2.run([inputTensor2]);
+			const outputData2 = outputMap2.values().next().value.data;
+			update_width(elem, 80);
+			const captcha = Array.from(outputData.values()).filter(function(e, i) {
+				return Array.from(outputData2.values())[i]>0;
+			}).map((x, i) => codemap[x]).join('');
+			await update_width(elem, 90);
+			console.log(captcha)
+			await update_width(elem, 100);
+			document.querySelector("#recognition_result").value = captcha;
+			elem.style.visibility = 'hidden';
+      }
+    </script>
+</body>
+
+</html>
