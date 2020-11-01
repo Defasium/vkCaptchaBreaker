@@ -42,7 +42,7 @@ Todo:
     * Add more options
     * Add Transformer architecture with self-attention as an alternative to RNN and Conv1d
 .. _VKontakte captcha bypass with pseudoCRNN model running as chrome extension:
-   https://github.com/Defasium/VKCaptchaBreaker
+   https://github.com/Defasium/vkCaptchaBreaker
 '''
 
 

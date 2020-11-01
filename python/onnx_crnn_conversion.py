@@ -22,7 +22,7 @@ Examples:
 	To specify name of the output models use the --onnxmodel_name option.
 
 .. _VKontakte captcha bypass with pseudoCRNN model running as chrome extension:
-   https://github.com/Defasium/VKCaptchaBreaker
+   https://github.com/Defasium/vkCaptchaBreaker
 '''
 
 
