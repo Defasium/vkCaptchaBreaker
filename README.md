@@ -78,7 +78,9 @@ Other troubles:
  * Can't use tf.where, because Nonzero is not implemented in ONNX.js
  
 You can check the list of supported operators in ONNX.js [`HERE`](https://github.com/microsoft/onnxjs/blob/master/docs/operators.md)
+
 ONNX is a great thing, but its JavaScript Framework needs more attention from microsoft developers.
+
 As a result, in the next project Tensorflow.js should be used instead of ONNX.js
 
 ____
