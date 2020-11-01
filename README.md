@@ -48,6 +48,12 @@ After [`training`](python/FilthyCaptchaLearning.ipynb) on 1.5 Million filthy lab
   <img src="assets/smallKD30_280k.png" alt="training on filthy data"/>
 </p>
 
+Optimised pseudoCRNN student architecture after [`convertion to ONNX format`](python/onnx_crnn_conversion.py):
+
+<p align="center">
+  <img src="assets/captcha_model.onnx.png" alt="architecture"/>
+</p>
+
 ____
 
 ## Sources
