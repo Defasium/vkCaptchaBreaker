@@ -5,7 +5,9 @@ VKontakte captcha bypass with pseudoCRNN model running as chrome extension, Pyth
   <img src="assets/vkcaptcha.gif" alt="title" width="100%"/>    
 </p>
 
-HTML Demo can be downloaded here: [__demo.html__](assets/demo.html)
+HTML Live Demo: [🔥](https://csb-inxnl.netlify.app/)
+
+Codesandbox link for html with onnx js: [__vk-captcha-breaker__](https://codesandbox.io/s/vk-captcha-breaker-inxnl?file=/index.html)
 
 Chrome extension can be downloaded here: [__VKCaptchaBreaker.crx__](https://github.com/Defasium/VKCaptchaBreaker/raw/main/VKcaptcha_breaker.crx)
 
@@ -72,4 +74,10 @@ ____
 
 ## Sources
 
-Soon
+This project was inspired by number-plate recognition work and uses its modified version of CRNN implementation, [@RIA.com](https://github.com/ria-com/nomeroff-net).
+
+ONNX.js reference example, created by [@elliotwaite](https://github.com/elliotwaite/pytorch-to-javascript).
+
+For small pseudoCRNN CNN encoder this system uses modified version of ShuffleNetV2, implemented by [@opconty](https://github.com/opconty/keras-shufflenetV2).
+
+Tensorflow Dataset class with caching implementation is the modified version of [@krasserm](https://github.com/krasserm/super-resolution).
