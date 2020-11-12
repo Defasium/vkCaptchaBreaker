@@ -134,7 +134,7 @@ const config = {
 
 var observer = new MutationObserver(function(mutations, obs) {
   
-  mutations.slice(0, 2).forEach(async function(mutation) {
+  mutations.slice(0, 1).forEach(async function(mutation) {
 	obs.disconnect();
 	if (mutation.type === 'childList' && available) {
 		try{
