@@ -9,16 +9,57 @@ HTML Live Demo from above picture: [🔥](https://csb-inxnl.netlify.app/)
 
 Code Sandbox for HTML with ONNX.js: [__vk-captcha-breaker__](https://codesandbox.io/s/vk-captcha-breaker-inxnl?file=/index.html)
 
-Chrome extension can be downloaded here: [__VKCaptchaBreaker.crx__](https://github.com/Defasium/VKCaptchaBreaker/raw/main/VKcaptcha_breaker.crx)
+Chrome extension can be downloaded here: [__VKCaptchaBreaker.crx__](https://github.com/Defasium/vkCaptchaBreaker/releases)
 
 ____
 
 ## Table of Contents
+  * [Installation](#installation)
+    * [Windows/Linux/MacOS](#windowslinuxmacos)
+    * [Android](#android)
   * [Description](#description)
   * [DataMining](#datamining)  
   * [ONNXTroubles](#onnxtroubles)
   * [Results](#results)
   * [Sources](#sources)
+____
+## Installation
+
+# <span style="color:red">Update v1.3: now it works for mobile domain only (m.vk.com)</span> 
+
+Google Chrome Extension for VKontakte which utilizes trained AI models to predict captcha from image and automatically enters it.
+
+Currently only captcha from messages are supported (no likes or comments for you, my bad)
+
+You can download latest version from: [__VKCaptchaBreaker.crx__](https://github.com/Defasium/vkCaptchaBreaker/releases)
+
+
+### Windows/Linux/MacOS
+
+To install the extension, simply follow this tutorial:
+
+[__www.cnet.com/how-to/how-to-install-chrome-extensions-manually__](https://www.cnet.com/how-to/how-to-install-chrome-extensions-manually/)
+
+Finally, activate it:
+
+<p align="center">
+  <img src="assets/chrome_activate.gif" alt="title" width="35%"/>    
+</p>
+
+### Android
+
+To install the extension, simply follow this tutorial:
+
+[__qwikfone.medium.com/how-to-install-chrome-extension-on-android-3cd89f3a771c__](https://qwikfone.medium.com/how-to-install-chrome-extension-on-android-3cd89f3a771c)
+
+Installation and activation example:
+
+<p align="center">
+  <img src="assets/android_activate.gif" alt="title" width="35%"/>    
+</p>
+
+If something won't work, just reactivate extension.
+
 ____
 ## Description
 
