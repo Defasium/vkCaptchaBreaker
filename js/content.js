@@ -18,6 +18,9 @@ async function recognize_captcha() {
 	//var img = document.getElementsByClassName('captcha')[0].childNodes[1].childNodes[0];
 	var img = document.querySelector("#mail-dialog > div.mailDialog__wrap > div > div.mailDialog__body > div > img");
 	//var placeholder = $('div[class*="captcha"]').find('input[class*="big_text"]');
+	if (img == null) {
+		return false;
+	}
 	var placeholder = document.querySelector("#mail-dialog > div.mailDialog__wrap > div > div.mailDialog__body > div > div > label > input");
 	var oc = document.createElement('canvas');
 	octx = oc.getContext('2d');
@@ -26,6 +29,11 @@ async function recognize_captcha() {
 
 	oc.width = width;
 	oc.height = height;
+	parsed_img = new Image();
+	parsed_img.src = img.image_source;
+	parsed_img.onload = function(){alert(i.width);}
+
+	
 	octx.drawImage(img, 0, 0, oc.width, oc.height);
 
 	// Run model with Tensor inputs and get the result.
@@ -42,15 +50,17 @@ async function recognize_captcha() {
 	const outputMap2 = await session2.run([inputTensor2]);
 	const outputData2 = outputMap2.values().next().value.data;
 
-	const captcha = Array.from(outputData.values()).filter(function(e, i) {
+	var captcha = Array.from(outputData.values()).filter(function(e, i) {
 		return Array.from(outputData2.values())[i]>0;
-	}).map((x, i) => codemap[x]).join('');
+	}).map((x, i) => codemap[x]).join('')
+	captcha = captcha.substring(0, 5);
+	if (captcha.length === 3) captcha = captcha + captcha.slice(-1);
 
 	console.log(captcha);
 
 	//placeholder.val(captcha);
 	placeholder.value = captcha;
-	submit_button = document.querySelector("#box_layer > div:nth-child(3) > div > div.box_controls_wrap > div.box_controls > table > tbody > tr > td:nth-child(2) > button");
+	//submit_button = document.querySelector("#box_layer > div:nth-child(3) > div > div.box_controls_wrap > div.box_controls > table > tbody > tr > td:nth-child(2) > button");
 	submit_button = document.querySelector("#mail-dialog > div.mailDialog__wrap > div > div.mailDialog__footer > div > div.Btn.Btn_theme_regular.mailDialog__button.mailDialog__confirmButton");
 	submit_button.click();
 	var bool_nonrecognized = false;
@@ -70,25 +80,37 @@ async function recognize_captcha() {
 	
 }
 
+chrome.runtime.sendMessage({
+                   data: "Hello background, how are you"
+               });
+
 
 chrome.runtime.onMessage.addListener(
-    async function(request, sender, sendResponse) {
+	async function(request, sender, sendResponse) {
 	  console.log(request.message);
       if( request.message === "power_on" ) {
 		session = new onnx.InferenceSession({'backendHint':'cpu'});
 		session2 = new onnx.InferenceSession({'backendHint':'cpu'});
 		await session.loadModel(chrome.runtime.getURL("models/captcha_model_.onnx"));
 		await session2.loadModel(chrome.runtime.getURL("models/ctc_model_.onnx"));
-		observer.observe(target, config);
 		//var i = 0;
 		//while (await recognize_captcha()) if (i++>10) break;
-    } if( request.message === "power_off" ) {
+		try { manageObserver(true, observer); } catch (e) {}
+    } else if( request.message === "power_off" ) {
 		session = null;
 		session2 = null;
-		try { observer.disconnect(); } catch (e) {}
+		manageObserver(false, observer);
+	} else if( request.message === "relocate_target" ) {
+		if (session == null) {return}
+		await new Promise(r => setTimeout(r, 1000));
+		manageObserver(true, observer);
+	} else if( request.message === "disable_observer" ) {
+		if (session == null) {return}
+		await new Promise(r => setTimeout(r, 1000));
+		manageObserver(false, observer);
 	}
-		
 });
+
 
 async function Scanner(){
 	var history_index = 0;
@@ -120,10 +142,9 @@ async function Scanner(){
 
 //Scanner();
 var available = true;
-var target = document.querySelector('#box_layer');//.querySelector('#captcha');
+//var target = document.querySelector('#box_layer');//.querySelector('#captcha');
 
 var target = document.querySelector("#mcont > div > div.messenger__dialog");
-
 
 const config = {
   subtree: false,
@@ -131,6 +152,7 @@ const config = {
   childList: true,
   characterData: true
 };
+
 
 var observer = new MutationObserver(function(mutations, obs) {
   
@@ -170,6 +192,15 @@ var observer = new MutationObserver(function(mutations, obs) {
   });
 });
 
+
+function manageObserver(enable, observer) {
+	if (enable) {
+		target = document.querySelector("#mcont > div > div.messenger__dialog");
+		observer.observe(target, config);
+	} else {
+		try { observer.disconnect(); } catch (e) {}
+	}
+}
 
 
 //observer.observe(target, config);
