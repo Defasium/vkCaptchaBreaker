@@ -29,34 +29,6 @@ chrome.browserAction.onClicked.addListener(function(tab) {
   updateIcon();
 });
 
-
-//chrome.alarms.clearAll();
-//chrome.alarms.create("test_alarm", {"delayInMinutes": 1.0, "periodInMinutes": 1.0})
-
-
-//var rule2 = {
-//        conditions: [
-//          new chrome.declarativeContent.PageStateMatcher({
-//            pageUrl: { hostEquals: 'www.stackoverflow.com', schemes: ['https'] },
-//            css: ["input[type='password']"]
-//          }),
-//          new chrome.declarativeContent.PageStateMatcher({
-//            css: ["video"]
-//          })
-//        ],
-//        actions: [ ]//new chrome.declarativeContent.ShowPageAction() ]
-//      };
-
-//chrome.runtime.onInstalled.addListener(function(details) {
-//	chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
-//		chrome.declarativeContent.onPageChanged.addRules([rule2]);
-//	});
-//});
-
-//chrome.alarms.onAlarm.addListener(function(alarm) {
-//	if( alarm.name === "test_alarm" ) alert("Hello, world!");
-//});
-
 // This block is new!
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
