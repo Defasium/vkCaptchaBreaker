@@ -9,52 +9,16 @@ const codemap = ' 24578acdehkmnpqsuvxyz';
 var session = null;
 var session2 = null;
 
-//scanner for captcha form;
-var available = true;
-var target = document.querySelector('#box_layer');
-
-const config = {
-  subtree: false,
-  attributes: true,
-  childList: true,
-  characterData: true
-};
-
-var observer = new MutationObserver(function(mutations, obs) {
-  mutations.slice(0, 1).forEach(async function(mutation) {
-	obs.disconnect();
-	if (mutation.type === 'childList' && available) {
-		try{
-			available = false;
-			var elem = document.querySelector("#validation_skip");
-			var i = 0;
-			while (elem == null) {
-				await new Promise(r => setTimeout(r, 200));
-				elem = document.querySelector("#validation_skip");
-				if (i++>10) break;
-			}
-			elem.click()
-			await new Promise(r => setTimeout(r, 200));
-			i = 0;
-			while (true) {
-				try {
-					if (!(await recognize_captcha())) break;
-				} catch (e) {
-					break;
-				}
-				if (i++>10) break;
-			};
-		} catch (e) {}
-	};
-	obs.observe(target, config);
-	available = true;
-  });
-});
 
 
 async function recognize_captcha() {
-	var img = document.getElementsByClassName('captcha')[0].childNodes[1].childNodes[0];
-	var placeholder = $('div[class*="captcha"]').find('input[class*="big_text"]');
+	//var img = document.getElementsByClassName('captcha')[0].childNodes[1].childNodes[0];
+	var img = document.querySelector("#mail-dialog > div.mailDialog__wrap > div > div.mailDialog__body > div > img");
+	//var placeholder = $('div[class*="captcha"]').find('input[class*="big_text"]');
+	if (img == null) {
+		return false;
+	}
+	var placeholder = document.querySelector("#mail-dialog > div.mailDialog__wrap > div > div.mailDialog__body > div > div > label > input");
 	var oc = document.createElement('canvas');
 	octx = oc.getContext('2d');
 	const width = 128;
@@ -62,6 +26,7 @@ async function recognize_captcha() {
 
 	oc.width = width;
 	oc.height = height;
+
 	octx.drawImage(img, 0, 0, oc.width, oc.height);
 
 	// Run model with Tensor inputs and get the result.
@@ -78,18 +43,25 @@ async function recognize_captcha() {
 	const outputMap2 = await session2.run([inputTensor2]);
 	const outputData2 = outputMap2.values().next().value.data;
 
-	const captcha = Array.from(outputData.values()).filter(function(e, i) {
+	var captcha = Array.from(outputData.values()).filter(function(e, i) {
 		return Array.from(outputData2.values())[i]>0;
-	}).map((x, i) => codemap[x]).join('');
+	}).map((x, i) => codemap[x]).join('')
+	captcha = captcha.substring(0, 5);
+	if (captcha.length === 3) captcha = captcha + captcha.slice(-1);
 
-	placeholder.val(captcha);
-	submit_button = document.querySelector("#box_layer > div:nth-child(3) > div > div.box_controls_wrap > div.box_controls > table > tbody > tr > td:nth-child(2) > button")
+	//console.log(captcha);
+
+	//placeholder.val(captcha);
+	placeholder.value = captcha;
+	//submit_button = document.querySelector("#box_layer > div:nth-child(3) > div > div.box_controls_wrap > div.box_controls > table > tbody > tr > td:nth-child(2) > button");
+	submit_button = document.querySelector("#mail-dialog > div.mailDialog__wrap > div > div.mailDialog__footer > div > div.Btn.Btn_theme_regular.mailDialog__button.mailDialog__confirmButton");
 	submit_button.click();
 	var bool_nonrecognized = false;
 	await new Promise(r => setTimeout(r, 1000));
 	try {
 
-		document.getElementsByClassName('captcha')[0].childNodes[1].childNodes[0];
+		//document.getElementsByClassName('captcha')[0].childNodes[1].childNodes[0];
+		document.querySelector("#mail-dialog > div.mailDialog__wrap > div > div.mailDialog__body > div > img");
 		bool_nonrecognized = true;
 
 	} catch(e) {
@@ -98,24 +70,102 @@ async function recognize_captcha() {
 
 	}
 	return bool_nonrecognized;
-	
+
 }
 
+chrome.runtime.sendMessage({
+				   data: "What is my current state, bro?"
+			   });
 
 chrome.runtime.onMessage.addListener(
-    async function(request, sender, sendResponse) {
-      if( request.message === "power_on" ) {
+	async function(request, sender, sendResponse) {
+	  if( request.message === "power_on" ) {
 		session = new onnx.InferenceSession({'backendHint':'cpu'});
 		session2 = new onnx.InferenceSession({'backendHint':'cpu'});
 		await session.loadModel(chrome.runtime.getURL("models/captcha_model_.onnx"));
 		await session2.loadModel(chrome.runtime.getURL("models/ctc_model_.onnx"));
-		observer.observe(target, config);
-    } if( request.message === "power_off" ) {
+		//var i = 0;
+		//while (await recognize_captcha()) if (i++>10) break;
+		try { await manageObserver(true, observer); } catch (e) {}
+	} else if( request.message === "power_off" ) {
 		session = null;
 		session2 = null;
-		try { observer.disconnect(); } catch (e) {}
+		await manageObserver(false, observer);
+	} else if( request.message === "relocate_target" ) {
+		if (session == null) return
+		if (available) return
+		console.log(request.message);
+		await manageObserver(true, observer);
+	} else if( request.message === "disable_observer" ) {
+		if (session == null) {return}
+		if (!available) return
+		console.log(request.message);
+		await manageObserver(false, observer);
 	}
 });
+
+var available = true;
+var target = document.querySelector("#mcont > div > div.messenger__dialog");
+
+const config = {
+  subtree: false,
+  attributes: true,
+  childList: true,
+  characterData: true
+};
+
+var observer = new MutationObserver(function(mutations, obs) {
+
+  mutations.slice(0, 1).forEach(async function(mutation) {
+	obs.disconnect();
+	if (mutation.type === 'childList' && available) {
+		try{
+			available = false;
+			var elem = document.querySelector("#mail-dialog > div.mailDialog__wrap > div > div.mailDialog__body > div > img");
+			var i = 0;
+			while (elem == null) {
+				console.log(available);
+				await new Promise(r => setTimeout(r, 200));
+				elem = document.querySelector("#mail-dialog > div.mailDialog__wrap > div > div.mailDialog__body > div > img");
+				if (i++>10) break;
+			}
+			await new Promise(r => setTimeout(r, 200));
+			//console.log('after another 1sec');
+			i = 0;
+			while (true) {
+				try {
+					if (!(await recognize_captcha())) break;
+				} catch (e) {
+					console.log(e);
+					break;
+				}
+				if (i++>10) break;
+			};
+		} catch (e) {console.log(e);}
+	};
+	obs.observe(target, config);
+	//console.log('start observing again');
+	available = true;
+  });
+});
+
+
+async function manageObserver(enable, observer) {
+	if (enable) {
+		var i = 0;
+		target = document.querySelector("#mcont > div > div.messenger__dialog");
+		while (target == null) {
+			await new Promise(r => setTimeout(r, 1000));
+			target = document.querySelector("#mcont > div > div.messenger__dialog");
+			if (i++>5) break;
+		}
+		available = true;
+		observer.observe(target, config);
+	} else {
+		available = false;
+		try { observer.disconnect(); } catch (e) {}
+	}
+}
 
 
 },{"onnxjs":2}],2:[function(require,module,exports){
