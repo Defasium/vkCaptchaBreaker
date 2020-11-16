@@ -87,7 +87,6 @@ chrome.runtime.sendMessage({
 
 chrome.runtime.onMessage.addListener(
 	async function(request, sender, sendResponse) {
-	  console.log(request.message);
       if( request.message === "power_on" ) {
 		session = new onnx.InferenceSession({'backendHint':'cpu'});
 		session2 = new onnx.InferenceSession({'backendHint':'cpu'});
@@ -95,19 +94,21 @@ chrome.runtime.onMessage.addListener(
 		await session2.loadModel(chrome.runtime.getURL("models/ctc_model_.onnx"));
 		//var i = 0;
 		//while (await recognize_captcha()) if (i++>10) break;
-		try { manageObserver(true, observer); } catch (e) {}
+		try { await manageObserver(true, observer); } catch (e) {}
     } else if( request.message === "power_off" ) {
 		session = null;
 		session2 = null;
-		manageObserver(false, observer);
+		await manageObserver(false, observer);
 	} else if( request.message === "relocate_target" ) {
-		if (session == null) {return}
-		await new Promise(r => setTimeout(r, 1000));
-		manageObserver(true, observer);
+		if (session == null) return
+		if (available) return
+		console.log(request.message);
+		await manageObserver(true, observer);
 	} else if( request.message === "disable_observer" ) {
 		if (session == null) {return}
-		await new Promise(r => setTimeout(r, 1000));
-		manageObserver(false, observer);
+		if (!available) return
+		console.log(request.message);
+		await manageObserver(false, observer);
 	}
 });
 
@@ -193,11 +194,19 @@ var observer = new MutationObserver(function(mutations, obs) {
 });
 
 
-function manageObserver(enable, observer) {
+async function manageObserver(enable, observer) {
 	if (enable) {
+		var i = 5;
 		target = document.querySelector("#mcont > div > div.messenger__dialog");
+		while (target == null) {
+			await new Promise(r => setTimeout(r, 1000));
+			target = document.querySelector("#mcont > div > div.messenger__dialog");
+			if (i++>10) break;
+		}
+		available = true;
 		observer.observe(target, config);
 	} else {
+		available = false;
 		try { observer.disconnect(); } catch (e) {}
 	}
 }
