@@ -18,7 +18,7 @@ async function recognize_captcha() {
 	if (img == null) {
 		return false;
 	}
-	var placeholder = document.querySelector("#mail-dialog > div.mailDialog__wrap > div > div.mailDialog__body > div > div > label > input");
+	var placeholder = document.querySelector("#mail-dialog > div.mailDialog__wrap > div > div.mailDialog__body > div > div > label > div > input");
 	var oc = document.createElement('canvas');
 	octx = oc.getContext('2d');
 	const width = 128;
