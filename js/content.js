@@ -9,7 +9,22 @@ const codemap = ' 24578acdehkmnpqsuvxyz';
 var session = null;
 var session2 = null;
 
-
+async function wait_image() {
+	var img = document.querySelector("#mail-dialog > div.mailDialog__wrap > div > div.mailDialog__body > div > img");
+	if (img == null) return false;
+	var recognized = false;
+	if (img.complete) {
+	  recognized = await recognize_captcha();
+	} else {
+	  await (new Promise(r => {img.onload = r})
+	  ).then(async function() {
+		  // Image have loaded.
+		  console.log('Loaded lol');
+		  recognized = await recognize_captcha();
+	  });
+	}
+	return recognized;
+}
 
 async function recognize_captcha() {
 	//var img = document.getElementsByClassName('captcha')[0].childNodes[1].childNodes[0];
@@ -108,10 +123,10 @@ var available = true;
 var target = document.querySelector("#mcont > div > div.messenger__dialog");
 
 const config = {
-  subtree: false,
-  attributes: true,
+  subtree: true,
+  attributes: false,
   childList: true,
-  characterData: true
+  characterData: false
 };
 
 var observer = new MutationObserver(function(mutations, obs) {
@@ -134,7 +149,7 @@ var observer = new MutationObserver(function(mutations, obs) {
 			i = 0;
 			while (true) {
 				try {
-					if (!(await recognize_captcha())) break;
+					if (!(await wait_image())) break;
 				} catch (e) {
 					console.log(e);
 					break;
@@ -159,6 +174,7 @@ async function manageObserver(enable, observer) {
 			target = document.querySelector("#mcont > div > div.messenger__dialog");
 			if (i++>5) break;
 		}
+		if (target == null) target = document.querySelector("#m > div");
 		available = true;
 		observer.observe(target, config);
 	} else {
