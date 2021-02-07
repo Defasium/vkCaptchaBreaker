@@ -5,7 +5,7 @@ Use this VKontakte captcha breaker with 91% accuracy right in browser with chrom
   <img src="assets/vkcaptcha.gif" alt="title" width="100%"/>    
 </p>
 
-HTML Live Demo from above picture: [🔥](https://csb-inxnl.netlify.app/)
+HTML Live Demo from above picture: [🔥DEMO🔥](https://csb-inxnl.netlify.app/)
 
 Code Sandbox for HTML with ONNX.js: [__vk-captcha-breaker__](https://codesandbox.io/s/vk-captcha-breaker-inxnl?file=/index.html)
 
@@ -25,11 +25,12 @@ ____
 ____
 ## Installation
 
-# <span style="color:red">Update v1.3: now it works for mobile domain only (m.vk.com)</span> 
+# <span style="color:red">Update v1.4: added support for other captcha scenarios</span>
+<span style="color:red">Update v1.3: now it works for mobile domain only (m.vk.com)</span>
 
 Google Chrome Extension for VKontakte which utilizes trained AI models to predict captcha from image and automatically enters it.
 
-Currently only captcha from messages are supported (no likes or comments for you, my bad)
+~~Currently only captcha from messages are supported (no likes or comments for you, my bad)~~
 
 You can download latest version from: [__VKCaptchaBreaker.crx__](https://github.com/Defasium/vkCaptchaBreaker/releases)
 
@@ -43,7 +44,7 @@ To install the extension, simply follow this tutorial:
 Finally, activate it:
 
 <p align="center">
-  <img src="assets/chrome_activate.gif" alt="title" width="35%"/>    
+  <img src="assets/chrome_activate.gif" alt="title" width="35%"/>
 </p>
 
 ### Android
@@ -55,7 +56,7 @@ To install the extension, simply follow this tutorial:
 Installation and activation example:
 
 <p align="center">
-  <img src="assets/android_activate.gif" alt="title" width="35%"/>    
+  <img src="assets/android_activate.gif" alt="title" width="35%"/>
 </p>
 
 If something won't work, just reactivate extension.
@@ -64,7 +65,7 @@ ____
 ## Description
 
 <p align="center">
-  <img src="assets/vkcaptchaformat.png" alt="vkcaptchaformat" width="100%"/>    
+  <img src="assets/vkcaptchaformat.png" alt="vkcaptchaformat" width="100%"/>
 </p>
 
 Keras implementation of Convolutional Recurrent Neural Network with [`ONNX.js`](https://github.com/microsoft/onnxjs) support.
@@ -100,7 +101,7 @@ ____
 ## ONNXTroubles
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/onnx/onnx/master/docs/ONNX_logo_main.png" alt="onnxlogo" width="100%"/>    
+  <img src="https://raw.githubusercontent.com/onnx/onnx/master/docs/ONNX_logo_main.png" alt="onnxlogo" width="100%"/>
 </p>
 
 Unfortunately, in the case of using models on Client-side, e.g. with JavaScript, existing frameworks (Open Neural Network Exchange (ONNX.js)) does not support RNNs.
@@ -109,8 +110,8 @@ It's important to note that RNNs also are quite slow due to it's nature.
 
 To mitigate this problem this project introduces a small pseudoCRNN architecture without RNN blocks. Instead of bidirectional Gated Recurrent Units (GRU) as in the BIG version, it uses one-dimensional convolutions. 
 Other troubles:
- * Can't use dynamic reshaping, e.g Reshape(None, -1, 32) will crash  
- * Can't use 1d Convolutions, instead the following trick was used: 
+ * Can't use dynamic reshaping, e.g Reshape(None, -1, 32) will crash
+ * Can't use 1d Convolutions, instead the following trick was used:
  
  (None, 32, 128) --Reshape--> (None, 32, 1, 128) --Conv2d--> (None, 32, 1, filters) --Reshape--> (None, 32, filters)
  * Can't use Droupout, it's important to reconstruct model without this layer
