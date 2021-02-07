@@ -5,11 +5,13 @@ Use this VKontakte captcha breaker with 91% accuracy right in browser with chrom
   <img src="assets/vkcaptcha.gif" alt="title" width="100%"/>    
 </p>
 
-HTML Live Demo from above picture: [🔥DEMO🔥](https://csb-inxnl.netlify.app/)
+### HTML Live Demo from above picture: [__🔥DEMO🔥__](https://csb-inxnl.netlify.app/)
 
-Code Sandbox for HTML with ONNX.js: [__vk-captcha-breaker__](https://codesandbox.io/s/vk-captcha-breaker-inxnl?file=/index.html)
+### Code Sandbox for HTML with ONNX.js: [__vk-captcha-breaker__](https://codesandbox.io/s/vk-captcha-breaker-inxnl?file=/index.html)
 
-Chrome extension can be downloaded here: [__VKCaptchaBreaker.crx__](https://github.com/Defasium/vkCaptchaBreaker/releases)
+Images in Demo or Sandbox are broken? [__Solution__](https://github.com/Defasium/vkCaptchaBreaker/issues/3)
+
+### Chrome extension can be downloaded here: [__VKCaptchaBreaker.crx__](https://github.com/Defasium/vkCaptchaBreaker/releases)
 
 ____
 
