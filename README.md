@@ -11,7 +11,12 @@ Use this VKontakte captcha breaker with 91% accuracy right in browser with chrom
 
 Images in Demo or Sandbox are broken? [__Solution__](https://github.com/Defasium/vkCaptchaBreaker/issues/3)
 
-### Chrome extension can be downloaded here: [__VKCaptchaBreaker.crx__](https://github.com/Defasium/vkCaptchaBreaker/releases)
+### Extension can be downloaded here: [__VKCaptchaBreaker.crx__](https://github.com/Defasium/vkCaptchaBreaker/releases)
+
+### Recognition speed comparison on different devices with different CPU specs (in milliseconds):
+<p align="center">
+  <img src="assets/speed.png" alt="Recognition speed comparison on different devices"/>
+</p>
 
 ____
 
@@ -27,10 +32,11 @@ ____
 ____
 ## Installation
 
-# <span style="color:red">Update v1.4: added support for other captcha scenarios</span>
+# <span style="color:red">Update v1.5: recognition in background, Firefox addon </span>
+<span style="color:red">Update v1.4: added support for other captcha scenarios</span>
 <span style="color:red">Update v1.3: now it works for mobile domain only (m.vk.com)</span>
 
-Google Chrome Extension for VKontakte which utilizes trained AI models to predict captcha from image and automatically enters it.
+Google Chrome Extension and Firefox Addon for VKontakte which utilizes trained AI models to predict captcha from image and automatically enters it.
 
 ~~Currently only captcha from messages are supported (no likes or comments for you, my bad)~~
 
@@ -41,7 +47,9 @@ You can download latest version from: [__VKCaptchaBreaker.crx__](https://github.
 
 To install the extension, simply follow this tutorial:
 
-[__www.cnet.com/how-to/how-to-install-chrome-extensions-manually__](https://www.cnet.com/how-to/how-to-install-chrome-extensions-manually/)
+For Chrome: [__www.cnet.com/how-to/how-to-install-chrome-extensions-manually__](https://www.cnet.com/how-to/how-to-install-chrome-extensions-manually/)
+
+For Firefox: [__www.muo.com/tag/how-to-install-firefox-add-ons-manually-even-from-github__](https://www.muo.com/tag/how-to-install-firefox-add-ons-manually-even-from-github/)
 
 Finally, activate it:
 
