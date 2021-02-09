@@ -13,9 +13,9 @@ Images in Demo or Sandbox are broken? [__Solution__](https://github.com/Defasium
 
 ### Extension can be downloaded here: 
 
-[__GitHub Releases__](https://github.com/Defasium/vkCaptchaBreaker/releases)
+* [__GitHub Releases__](https://github.com/Defasium/vkCaptchaBreaker/releases)
 
-[__Firefox Browser Addons__](https://addons.mozilla.org/firefox/addon/vkcaptchabreaker/)
+* [__Firefox Browser Addons__](https://addons.mozilla.org/firefox/addon/vkcaptchabreaker/)
 
 ### Recognition speed comparison on different devices with different CPU specs (in milliseconds):
 <p align="center">
@@ -52,9 +52,9 @@ You can download latest version from: [__VKCaptchaBreaker.crx__](https://github.
 
 To install the extension, simply follow this tutorial:
 
-For Chrome: [__www.cnet.com/how-to/how-to-install-chrome-extensions-manually__](https://www.cnet.com/how-to/how-to-install-chrome-extensions-manually/)
+* For Chrome: [__www.cnet.com/how-to/how-to-install-chrome-extensions-manually__](https://www.cnet.com/how-to/how-to-install-chrome-extensions-manually/)
 
-For Firefox: [__www.muo.com/tag/how-to-install-firefox-add-ons-manually-even-from-github__](https://www.muo.com/tag/how-to-install-firefox-add-ons-manually-even-from-github/)
+* For Firefox: [__www.muo.com/tag/how-to-install-firefox-add-ons-manually-even-from-github__](https://www.muo.com/tag/how-to-install-firefox-add-ons-manually-even-from-github/)
 
 Finally, activate it:
 
