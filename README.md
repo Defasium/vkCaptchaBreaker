@@ -11,11 +11,16 @@ Use this VKontakte captcha breaker with 91% accuracy right in browser with chrom
 
 Images in Demo or Sandbox are broken? [__Solution__](https://github.com/Defasium/vkCaptchaBreaker/issues/3)
 
-### Extension can be downloaded here: 
+### Extension can be downloaded here:
 
-* [__GitHub Releases__](https://github.com/Defasium/vkCaptchaBreaker/releases)
-
-* [__Firefox Browser Addons__](https://addons.mozilla.org/firefox/addon/vkcaptchabreaker/)
+<p align="center">
+  <a href="https://chrome.google.com/webstore/detail/eddkhdhajafifjjliglooomfcmghflfa">
+    <img src="assets/chrome-webstore.png" alt="Chrome Web Store"></a>
+  <a href="https://addons.mozilla.org/firefox/addon/vkcaptchabreaker">
+    <img src="assets/firefox-addons.png" alt="Firefox add-ons"></a>
+  <a href="https://github.com/Defasium/vkCaptchaBreaker/releases">
+    <img src="assets/github-release.png" alt="GitHub Releases"></a>
+</p>
 
 ### Recognition speed comparison on different devices with different CPU specs (in milliseconds):
 <p align="center">
