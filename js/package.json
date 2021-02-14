@@ -1,0 +1,15 @@
+{
+  "name": "vkCaptchaBreaker",
+  "version": "1.5.0",
+  "description": "Google Chrome Extension which utilizes trained AI models to predict captcha from image and automatically enters it.",
+  "main": "content.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Defasium",
+  "license": "ISC",
+  "dependencies": {
+    "onnxjs": "^0.1.8"
+  },
+}
