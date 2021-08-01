@@ -5,7 +5,7 @@ Use this VKontakte captcha breaker with 91% accuracy right in browser with chrom
   <img src="assets/vkcaptcha.gif" alt="title" width="100%"/>    
 </p>
 
-### HTML Live Demo from above picture: [__🔥DEMO🔥__](https://csb-inxnl.netlify.app/)
+### HTML Live Demo from above picture: [__🔥DEMO🔥__](https://csb-so9x3.netlify.app/)
 
 ### Code <img src="assets/codesandbox_icon.png" alt="CodeSandbox" height='24px'> Sandbox for HTML with ONNX.js: [__vk-captcha-breaker__](https://codesandbox.io/s/vk-captcha-breaker-inxnl?file=/index.html)
 
