@@ -4,7 +4,7 @@
   "description": "Google Chrome Extension which utilizes trained AI models to predict captcha from image and automatically enters it.",
   "author": "Defasium (https://github.com/Defasium)",
   "version": "1.6",
-  "permissions": ["storage", "tabs", "downloads", "*://api.vk.com/*", "*://vk.com/*", "*://m.vk.com/*"],
+  "permissions": ["storage", "tabs", "*://api.vk.com/*", "*://vk.com/*", "*://m.vk.com/*"],
    "background": {
        "scripts": [
          "background.js"
