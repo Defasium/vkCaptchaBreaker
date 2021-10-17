@@ -41,7 +41,9 @@ ____
 ____
 ## Installation
 
-# <span style="color:red">Update v1.5: recognition in background, Firefox addon </span>
+# <span style="color:red">Update v1.6: 30% faster, CORS is no longer a problem </span>
+<span style="color:red">Update v1.5: recognition in background, Firefox addon </span>
+
 <span style="color:red">Update v1.4: added support for other captcha scenarios</span>
 
 <span style="color:red">Update v1.3: now it works for mobile domain only (m.vk.com)</span>
