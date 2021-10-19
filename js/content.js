@@ -60,12 +60,6 @@
     async function wait_image(click = true) {
         const img = document.getElementsByClassName(DOM.captcha_img)[0];
         if (img == null) return true;
-        return await recognize_captcha(img, click);
-    }
-
-    async function recognize_captcha(img, click) {
-        const placeholder = document.getElementsByName(DOM.captcha_key)[0];
-        let bool_recognized = true;
 		// Download image in background
         chrome.runtime.sendMessage({
             captchaURL: img.src
@@ -75,6 +69,15 @@
 			).then((newSrc) => {
 			img.src = newSrc;
 		});
+		if (!img.complete) {
+			await (new Promise(r => {img.onload = r})).then();
+		}
+        return await recognize_captcha(img, click);
+    }
+
+    async function recognize_captcha(img, click) {
+        const placeholder = document.getElementsByName(DOM.captcha_key)[0];
+        let bool_recognized = true;
 		const octx = data.oc.getContext('2d');
         octx.drawImage(img, 0, 0, data.width, data.height);
         
