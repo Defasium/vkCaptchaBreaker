@@ -7,7 +7,7 @@ Use this VKontakte captcha breaker with 91% accuracy right in browser with chrom
 
 ### HTML Live Demo from above picture: [__🔥DEMO🔥__](https://csb-so9x3.netlify.app/)
 
-### Code <img src="assets/codesandbox_icon.png" alt="CodeSandbox" height='24px'> Sandbox for HTML with ONNX.js: [__vk-captcha-breaker__](https://codesandbox.io/s/vk-captcha-breaker-inxnl?file=/index.html)
+### Code <img src="assets/codesandbox_icon.png" alt="CodeSandbox" height='24px'> Sandbox for HTML with ONNX.js+ONNXruntimeWeb: [__vk-captcha-breaker__](https://codesandbox.io/s/vk-captcha-breaker-inxnl?file=/index.html)
 
 _Images in Demo or Sandbox are broken? [__Solution__](https://github.com/Defasium/vkCaptchaBreaker/issues/3)_
 
@@ -16,7 +16,7 @@ _Images in Demo or Sandbox are broken? [__Solution__](https://github.com/Defasiu
 <p align="center">
   <a href="https://chrome.google.com/webstore/detail/eddkhdhajafifjjliglooomfcmghflfa">
     <img src="assets/chrome-webstore.png" alt="Chrome Web Store"></a>
-  <a href="https://addons.mozilla.org/firefox/addon/vkcaptchabreaker">
+  <a href="https://addons.mozilla.org/firefox/addon/vkcaptcha">
     <img src="assets/firefox-addons.png" alt="Firefox add-ons"></a>
   <a href="https://github.com/Defasium/vkCaptchaBreaker/releases">
     <img src="assets/github-release.png" alt="GitHub Releases"></a>
@@ -41,7 +41,9 @@ ____
 ____
 ## Installation
 
-# <span style="color:red">Update v1.5: recognition in background, Firefox addon </span>
+# <span style="color:red">Update v1.6: 30% faster, CORS is no longer a problem </span>
+<span style="color:red">Update v1.5: recognition in background, Firefox addon </span>
+
 <span style="color:red">Update v1.4: added support for other captcha scenarios</span>
 
 <span style="color:red">Update v1.3: now it works for mobile domain only (m.vk.com)</span>

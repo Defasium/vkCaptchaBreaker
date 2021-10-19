@@ -3,13 +3,13 @@
   "name": "VKCaptchaBreaker",
   "description": "Google Chrome Extension which utilizes trained AI models to predict captcha from image and automatically enters it.",
   "author": "Defasium (https://github.com/Defasium)",
-  "version": "1.4",
-  "permissions": ["storage", "tabs"],
+  "version": "1.6",
+  "permissions": ["storage", "tabs", "*://api.vk.com/*", "*://vk.com/*", "*://m.vk.com/*"],
    "background": {
        "scripts": [
          "background.js"
        ],
-       "persistent": false
+       "persistent": true
   },
   "content_scripts": [
     {
@@ -22,6 +22,5 @@
             "128": "icon128.png"},
   "browser_action": {
     "default_icon": "icon48_0.png"
-  },
-  "web_accessible_resources": ["models/*.onnx"]
+  }
 }
