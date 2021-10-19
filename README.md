@@ -30,6 +30,7 @@ _Images in Demo or Sandbox are broken? [__Solution__](https://github.com/Defasiu
 ____
 
 ## Table of Contents
+  * [Features](#features)
   * [Installation](#installation)
     * [Windows/Linux/MacOS](#windowslinuxmacos)
     * [Android](#android)
@@ -39,6 +40,16 @@ ____
   * [Results](#results)
   * [Sources](#sources)
 ____
+## Features
+
+Currently supported actions (on mobile domain m.vk.com only):
+* messages ✉️ 
+* likes ❤️
+* comments 💬
+* adding to friends 🧑‍🤝‍🧑
+
+Please, note that captcha on login page and promocode page is not supported!
+
 ## Installation
 
 # <span style="color:red">Update v1.6: 30% faster, CORS is no longer a problem </span>
