@@ -16,7 +16,7 @@ _Images in Demo or Sandbox are broken? [__Solution__](https://github.com/Defasiu
 <p align="center">
   <a href="https://chrome.google.com/webstore/detail/eddkhdhajafifjjliglooomfcmghflfa">
     <img src="assets/chrome-webstore.png" alt="Chrome Web Store"></a>
-  <a href="https://addons.mozilla.org/firefox/addon/vkcaptchabreaker">
+  <a href="https://addons.mozilla.org/firefox/addon/vkcaptcha">
     <img src="assets/firefox-addons.png" alt="Firefox add-ons"></a>
   <a href="https://github.com/Defasium/vkCaptchaBreaker/releases">
     <img src="assets/github-release.png" alt="GitHub Releases"></a>
