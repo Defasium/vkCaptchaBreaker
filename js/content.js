@@ -30,22 +30,22 @@
         RGBimgarr: new Uint8Array(128 * 64 * 1),
     };
 
-	const DOM = {
-		captcha_img: 'captcha_img',
-		captcha_key: 'captcha_key',
-		submit_btn_1: 'mailDialog__confirmButton',
-		submit_btn_2: 'wide_button',
-		passWord: 'pass',
-	}
-	Object.freeze(DOM);
+    const DOM = {
+        captcha_img: 'captcha_img',
+        captcha_key: 'captcha_key',
+        submit_btn_1: 'mailDialog__confirmButton',
+        submit_btn_2: 'wide_button',
+        passWord: 'pass',
+    }
+    Object.freeze(DOM);
 
-	const MESSAGES = {
-		unreachable: 'unreachable',
-		power_off: 'power_off',
-		power_on: 'power_on',
-		ping: '?',
-	}
-	Object.freeze(MESSAGES);
+    const MESSAGES = {
+        unreachable: 'unreachable',
+        power_off: 'power_off',
+        power_on: 'power_on',
+        ping: '?',
+    }
+    Object.freeze(MESSAGES);
 
     async function base64_arraybuffer(data) {
         // https://stackoverflow.com/a/66046176
@@ -60,34 +60,37 @@
     async function wait_image(click = true) {
         const img = document.getElementsByClassName(DOM.captcha_img)[0];
         if (img == null) return true;
-		// Download image in background
+        // Download image in background
         chrome.runtime.sendMessage({
             captchaURL: img.src
         });
         img.src = '';
-        await (new Promise(r => {data.captcha.registerListener(r)})
-			).then((newSrc) => {
-			img.src = newSrc;
-		});
-		if (!img.complete) {
-			await (new Promise(r => {img.onload = r})).then();
-		}
+        await (new Promise(r => {
+            data.captcha.registerListener(r)
+        })).then((newSrc) => {
+            img.src = newSrc;
+        });
+        if (!img.complete) {
+            await (new Promise(r => {
+                img.onload = r
+            })).then();
+        }
         return await recognize_captcha(img, click);
     }
 
     async function recognize_captcha(img, click) {
         const placeholder = document.getElementsByName(DOM.captcha_key)[0];
         let bool_recognized = true;
-		const octx = data.oc.getContext('2d');
+        const octx = data.oc.getContext('2d');
         octx.drawImage(img, 0, 0, data.width, data.height);
-        
-		// Run model with Tensor inputs in background and get the result.
+
+        // Run model with Tensor inputs in background and get the result.
         const arr = octx.getImageData(0, 0, data.width, data.height).data;
         for (let i = 0, counter = 0, length = data.width * data.height * 4; i < length; i += 4) {
             data.RGBimgarr[counter] = arr[i];
             counter++;
         }
-		chrome.runtime.sendMessage(await base64_arraybuffer(data.RGBimgarr.buffer));
+        chrome.runtime.sendMessage(await base64_arraybuffer(data.RGBimgarr.buffer));
         await (new Promise(r => {
             data.captcha.registerListener(r)
         })).then((captcha) => {
