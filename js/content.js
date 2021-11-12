@@ -36,6 +36,7 @@
         submit_btn_1: 'mailDialog__confirmButton',
         submit_btn_2: 'wide_button',
         passWord: 'pass',
+        popup: 'CaptchaPopup',
     }
     Object.freeze(DOM);
 
@@ -60,16 +61,18 @@
     async function wait_image(click = true) {
         const img = document.getElementsByClassName(DOM.captcha_img)[0];
         if (img == null) return true;
-        // Download image in background
-        chrome.runtime.sendMessage({
-            captchaURL: img.src
-        });
-        img.src = '';
-        await (new Promise(r => {
-            data.captcha.registerListener(r)
-        })).then((newSrc) => {
-            img.src = newSrc;
-        });
+        if (img.src[0] !== 'd') {
+            // Download image in background
+            chrome.runtime.sendMessage({
+                captchaURL: img.src
+            });
+            img.src = '';
+            await (new Promise(r => {
+                data.captcha.registerListener(r)
+            })).then((newSrc) => {
+                img.src = newSrc;
+            });
+        }
         if (!img.complete) {
             await (new Promise(r => {
                 img.onload = r
@@ -79,7 +82,21 @@
     }
 
     async function recognize_captcha(img, click) {
-        const placeholder = document.getElementsByName(DOM.captcha_key)[0];
+        const captchaForm = document.getElementsByClassName(DOM.popup);
+        let submit_button = document.getElementsByClassName(DOM.submit_btn_1);
+        let placeholder;
+        if (captchaForm.length) {
+            placeholder = captchaForm[0].getElementsByTagName('input')[0];
+            submit_button = captchaForm[0].getElementsByTagName('button')[0];
+            //submit_button.setAttribute("onclick", "Btn._onClick(event, this, ['CaptchaPopup.onSend']);console.log(document.getElementsByClassName('captcha_img')[0].src);");
+        } else {
+            placeholder = document.getElementsByName(DOM.captcha_key)[0];
+            if (submit_button.length) {
+                submit_button = submit_button[0];
+            } else {
+                submit_button = document.getElementsByClassName(DOM.submit_btn_2)[0];
+            }
+        }
         let bool_recognized = true;
         const octx = data.oc.getContext('2d');
         octx.drawImage(img, 0, 0, data.width, data.height);
@@ -105,16 +122,16 @@
         if (!bool_recognized)
             return bool_recognized;
         if (click) {
-            let submit_button = document.getElementsByClassName(DOM.submit_btn_1);
-            if (submit_button.length === 0)
-                submit_button = document.getElementsByClassName(DOM.submit_btn_2);
-            const img_src = img.src + '';
-            submit_button[0].click();
+            //const img_src = img.src + '';
+            submit_button.click();
+            //return true;
             try {
                 const captcha_img = document.getElementsByClassName(DOM.captcha_img);
-                if (captcha_img.length)
-                    if (captcha_img[0].src !== img_src)
+                if (captcha_img.length) {
+                    if (captcha_img[0].src[0] !== 'd') {
                         bool_recognized = false;
+                    }
+                }
             } catch (e) {
                 console.log(e);
                 bool_recognized = true;
@@ -140,26 +157,28 @@
             data.flag = true;
             data.oc.width = data.width;
             data.oc.height = data.height;
-            manageObserver(null, data.global_observer);
+            //document.addEventListener('click', manageObserver);
+            manageObserver(null);
+            data.global_observer.observe(document.body, data.config);
         } else if (request.message === MESSAGES.power_off) {
             data.available = true;
             data.flag = true;
         }
-        data.global_observer.observe(document.body, data.config);
     }
 
     chrome.runtime.onMessage.addListener(iconCallback);
 
-    async function manageObserver(mutations, obs) {
+    async function manageObserver(mutations) {
         if (document.getElementsByClassName(DOM.captcha_img).length === 0) {
             data.flag = true;
             return;
         }
         if (data.flag && data.available) {
-            obs.disconnect();
+            //data.global_observer.disconnect();
             const click = document.getElementsByName(DOM.passWord)[0] ? false : true;
             try {
                 data.available = false;
+                data.flag = false;
                 var i = 0;
                 while (i++ < 7) {
                     try {
@@ -177,8 +196,8 @@
                 console.log(e);
             }
             data.available = true;
-            obs.observe(document.body, data.config);
-            data.flag = false;
+            data.flag = true;
+            //data.global_observer.observe(document.body, data.config);
         }
     }
 })(this);
